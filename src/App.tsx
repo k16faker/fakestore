@@ -1,26 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
+
+import styled from 'styled-components';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+
+
 import './App.css';
+import RootPage from './components/pages/RootPage';
+import MainPage from './components/pages/MainPage';
+import CategoryPage from './components/pages/CategoryPage';
 
 function App() {
+
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <RootPage />,
+      children: [
+        {
+          path:'/',
+          element: <MainPage />
+        },
+        {
+          path:'/category',
+          element: <CategoryPage />
+        }
+      ],
+    },
+  ]);
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <FullDiv>
+      <RouterProvider router={router}></RouterProvider>
+    </FullDiv>
   );
 }
 
 export default App;
+
+const FullDiv = styled.div`
+  width: 1500px;
+  margin: 0 auto;
+  font-family: 'IBM Plex Sans KR', sans-serif;
+`;
+
