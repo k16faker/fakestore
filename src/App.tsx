@@ -7,6 +7,7 @@ import './App.css';
 import RootPage from './components/pages/RootPage';
 import MainPage from './components/pages/MainPage';
 import CategoryPage from './components/pages/CategoryPage';
+import DetailProductPage from './components/products/DetailProductPage';
 
 function App() {
 
@@ -22,6 +23,10 @@ function App() {
         {
           path:'/category',
           element: <CategoryPage />
+        },
+        {
+          path:'/product',
+          element:<DetailProductPage />
         }
       ],
     },

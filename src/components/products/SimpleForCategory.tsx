@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 
 interface SimpleProduct {
@@ -13,7 +14,8 @@ interface SimpleProduct {
 
 const SimpleForCategory:React.FC<SimpleProduct> = ({id, title, price, description, category, image}) => {
   return (
-    <Container key={id}>
+    <CutsomLink to={`/product?id=${id}`}>
+      <Container key={id}>
         <img src={image} alt="상품 이미지" />
         <p>{title}</p>
         <p>{price} $</p>
@@ -21,7 +23,8 @@ const SimpleForCategory:React.FC<SimpleProduct> = ({id, title, price, descriptio
             <CustomBtn>장바구니</CustomBtn>
             <CustomBtn>구매하기</CustomBtn>
         </BtnZone>
-    </Container>
+      </Container>
+    </CutsomLink>
   )
 }
 
@@ -77,4 +80,9 @@ const CustomBtn = styled.button`
         cursor: pointer;
         background-color: blue;
     }
+`;
+
+const CutsomLink = styled(Link)`
+  text-decoration: none;
+  color: black;
 `;
