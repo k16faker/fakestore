@@ -19,10 +19,10 @@ const SimpleForCategory:React.FC<SimpleProduct> = ({id, title, price, descriptio
         <img src={image} alt="상품 이미지" />
         <p>{title}</p>
         <p>{price} $</p>
-        <BtnZone>
+        {/* <BtnZone>
             <CustomBtn>장바구니</CustomBtn>
             <CustomBtn>구매하기</CustomBtn>
-        </BtnZone>
+        </BtnZone> */}
       </Container>
     </CutsomLink>
   )

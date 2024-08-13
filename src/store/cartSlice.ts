@@ -41,7 +41,7 @@ export const cartSlice = createSlice({
           (item) => item.name === action.payload.name
         );
         if (index !== -1) {
-          state.items[index].quantity += 1;
+          state.items[index].quantity += action.payload.quantity;
         } else {
           state.items.push({
             id: state.items.length,

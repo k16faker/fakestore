@@ -2,7 +2,15 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link, LinkProps } from 'react-router-dom'
 
+
+import { useAppSelector } from "../../store/store"
+import { addCart } from "../../store/cartSlice";
+
 const Header = () => {
+
+  const carts = useAppSelector((state) => state.cart.items);
+
+
   return (
     <CustomHeader>
       <HeaderZone>
@@ -15,7 +23,7 @@ const Header = () => {
         </SearchZone>
         <CustomUl>
           <li><CutsomLink to="/product">상품</CutsomLink></li>
-          <li><CutsomLink to="/cart">장바구니</CutsomLink></li>
+          <li><CutsomLink to="/cart">장바구니  {carts.length}</CutsomLink></li>
           <li><CutsomLink to="/order">주문</CutsomLink></li>
           <li><CutsomLink to="/login">로그인</CutsomLink></li>
         </CustomUl>

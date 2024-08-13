@@ -34,6 +34,12 @@ const DetailProductPage = () => {
             setQuantity(1);
         }
     }
+    
+    const dispatchHandler = () => {
+        dispatch(addCart({name: data.title, price: data.price, quantity: quantity}));
+        alert('장바구니에 담겼습니다.');
+    };
+
 
 
     useEffect(() => {
@@ -58,7 +64,7 @@ const DetailProductPage = () => {
                     <button onClick={() => setQuantity(quantity + 1)}>+</button>
                 </QuantityContainer>
                 <ButtonContainer>
-                    <button onClick={()=>dispatch(addCart({name: data.name, price: data.price, quantity: quantity}))}>장바구니 담기</button>
+                    <button onClick={dispatchHandler}>장바구니 담기</button>
                     <button>구매하기</button>
                 </ButtonContainer>
             </ProductContainer>

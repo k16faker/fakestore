@@ -8,6 +8,7 @@ import RootPage from './components/pages/RootPage';
 import MainPage from './components/pages/MainPage';
 import CategoryPage from './components/pages/CategoryPage';
 import DetailProductPage from './components/products/DetailProductPage';
+import CartPage from './components/pages/CartPage';
 
 function App() {
 
@@ -27,6 +28,10 @@ function App() {
         {
           path:'/product',
           element:<DetailProductPage />
+        },
+        {
+          path:'/cart',
+          element:<CartPage />
         }
       ],
     },
