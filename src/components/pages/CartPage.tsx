@@ -1,13 +1,18 @@
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 import { useAppSelector } from "../../store/store";
 import { useAppDispatch } from "../../store/store";
 import { removeCart } from "../../store/cartSlice";
 
 const CartPage = () => {
+  const navigate = useNavigate();
   const carts = useAppSelector((state) => state.cart.items);
   const dispatch = useAppDispatch();
+
+  const fullPrice = carts.reduce((acc, cart) => acc + cart.price * cart.quantity, 0);
+  const fixedPrice = fullPrice.toFixed(2);
 
   if (carts.length === 0) {
     return (
@@ -29,7 +34,7 @@ const CartPage = () => {
         {carts.map((cart) => (
           <li key={cart.id}>
             <ItemContainer>
-              <ItemName>{cart.name}</ItemName>
+              <ItemName onClick={()=> navigate(`/product?id=${cart.id}`)}>{cart.name}</ItemName>
               <ItemPrice>{cart.price} $</ItemPrice>
               <ItemQuantity>{cart.quantity}</ItemQuantity>
               <RemoveButton onClick={() => dispatch(removeCart({ name: cart.name }))}>
@@ -39,7 +44,8 @@ const CartPage = () => {
           </li>
         ))}
       </CustomUl>
-      <button onClick={() => console.log(carts)}>주문하기</button>
+      <h2>총 가격: {fixedPrice} $</h2>
+      <CustomBtn onClick={() => console.log(carts)}>주문하기</CustomBtn>
     </Container>
   );
 };
@@ -127,5 +133,20 @@ const RemoveButton = styled.button`
     background-color: gray;
     color: white;
     scale: 1.1;
+  }
+`;
+
+const CustomBtn = styled.button`
+  width: 150px;
+  height: 40px;
+  border: none;
+  color: white;
+  background-color: blue;
+  font-size:1.2rem;
+  transition: all 0.2s;
+
+  &:hover {
+    cursor: pointer;
+    background-color: skyblue;
   }
 `;

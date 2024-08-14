@@ -10,14 +10,20 @@ interface SimpleProduct {
     description: string,
     category: string,
     image: string
+    rating: {
+        rate: number,
+        count: number
+    }
 }
 
-const SimpleForCategory:React.FC<SimpleProduct> = ({id, title, price, description, category, image}) => {
+const SimpleForCategory:React.FC<SimpleProduct> = ({id, title, price, description, category, image, rating}) => {
   return (
     <CutsomLink to={`/product?id=${id}`}>
       <Container key={id}>
         <img src={image} alt="상품 이미지" />
         <p>{title}</p>
+        <p>Rating : {rating.rate}</p>
+        <p>Count : {rating.count}</p>
         <p>{price} $</p>
         {/* <BtnZone>
             <CustomBtn>장바구니</CustomBtn>
@@ -39,7 +45,6 @@ const Container = styled.li`
     padding: 10px;
     width: 80%;
     height: 400px;
-    border: 1px solid black;
     border-radius: 10px;
     transition: all 0.5s;
     text-align: center;
@@ -59,28 +64,6 @@ const Container = styled.li`
     }
 `;
 
-const BtnZone = styled.div`
-  display: flex;
-  width: 50%;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const CustomBtn = styled.button`
-    width: 40%;
-    height: 40px;
-    border: none;
-    border-radius: 10px;
-    background-color: skyblue;
-    color: white;
-    font-size: 1rem;
-    transition: all 0.5s;
-
-    &:hover {
-        cursor: pointer;
-        background-color: blue;
-    }
-`;
 
 const CutsomLink = styled(Link)`
   text-decoration: none;

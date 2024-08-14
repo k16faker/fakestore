@@ -22,9 +22,7 @@ const Header = () => {
           <button>검색</button>
         </SearchZone>
         <CustomUl>
-          <li><CutsomLink to="/product">상품</CutsomLink></li>
-          <li><CutsomLink to="/cart">장바구니  {carts.length}</CutsomLink></li>
-          <li><CutsomLink to="/order">주문</CutsomLink></li>
+          <li><CutsomLink to="/cart">장바구니     {carts.length}</CutsomLink></li>
           <li><CutsomLink to="/login">로그인</CutsomLink></li>
         </CustomUl>
       </HeaderZone>

@@ -19,6 +19,7 @@ const DetailProductPage = () => {
     const dispatch = useAppDispatch();
 
     const [quantity, setQuantity] = useState(1);
+    const [translatedDescription, setTranslatedDescription] = useState('');
 
     const [searchParams] = useSearchParams();
     const id = searchParams.get('id');
@@ -27,6 +28,7 @@ const DetailProductPage = () => {
         const response = await fetch(url);
         return response.json();
     });
+
 
     const checkQuantity = () => {
         if (quantity < 1) {
@@ -55,7 +57,9 @@ const DetailProductPage = () => {
             <ProductContainer>
                 <img src={data.image} alt="상품 이미지" />
                 <h3>{data.title}</h3>
-                <p>{data.price} $</p>
+                <p>Rating : {data.rating.rate}</p>
+                <p>Sales : {data.rating.count}</p>
+                <p>Price : {data.price} $</p>
                 <p>{data.description}</p>
                 <QuantityContainer>
                     <p>quantity : </p>

@@ -9,6 +9,7 @@ import MainPage from './components/pages/MainPage';
 import CategoryPage from './components/pages/CategoryPage';
 import DetailProductPage from './components/products/DetailProductPage';
 import CartPage from './components/pages/CartPage';
+import LoginPage from './components/pages/LoginPage';
 
 function App() {
 
@@ -32,6 +33,10 @@ function App() {
         {
           path:'/cart',
           element:<CartPage />
+        },
+        {
+          path:'/login',
+          element:<LoginPage />
         }
       ],
     },

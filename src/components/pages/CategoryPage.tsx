@@ -11,7 +11,11 @@ interface SimpleProduct {
     price: number,
     description: string,
     category: string,
-    image: string
+    image: string,
+    rating: {
+        rate: number,
+        count: number
+    }
 }
 
 
@@ -36,7 +40,7 @@ const CategoryPage = () => {
       <CustomUl>
         {products.map((product, index) => {
           return (
-            <SimpleForCategory key={index} id={product.id} title={product.title} price={product.price} description={product.description} category={product.category} image={product.image} />
+            <SimpleForCategory key={index} id={product.id} title={product.title} price={product.price} description={product.description} category={product.category} image={product.image} rating={product.rating} />
           )
         }
         )}
