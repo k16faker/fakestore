@@ -1,12 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link, LinkProps } from 'react-router-dom'
+import { UserAuth } from '../../context/AuthContext'
 
 
 import { useAppSelector } from "../../store/store"
 import { addCart } from "../../store/cartSlice";
 
 const Header = () => {
+
+  const {user, logOut} = UserAuth();
 
   const carts = useAppSelector((state) => state.cart.items);
 
@@ -23,7 +26,9 @@ const Header = () => {
         </SearchZone>
         <CustomUl>
           <li><CutsomLink to="/cart">장바구니     {carts.length}</CutsomLink></li>
+          {user ? <li><CutsomLink to="/" onClick={logOut}>로그아웃</CutsomLink></li> : 
           <li><CutsomLink to="/login">로그인</CutsomLink></li>
+          }
         </CustomUl>
       </HeaderZone>
       <CategoryZone>
@@ -99,7 +104,7 @@ const CustomUl = styled.ul`
   display:flex;
   width:650px;
   margih-right: 20px;
-  justify-content: space-between;
+  justify-content: center;
   height: 50px;
   list-style: none;
   align-items: center;
@@ -108,6 +113,7 @@ const CustomUl = styled.ul`
     padding: 5px;
     align-items: center;
     transition: 0.3s;
+    margin-right: 60px;
   }
 
   li:hover {

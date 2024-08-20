@@ -1,18 +1,45 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
+import { UserAuth } from '../../context/AuthContext'
 
 
 const SignUpForm = () => {
+    const navigate = useNavigate();
+
+    const { signUp } = UserAuth();
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [name, setName] = useState('');
+
+
+    const signupHandler = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if(password !== confirmPassword) {
+            return alert('Passwords do not match');
+        }
+        try {
+            await signUp(email, password, name);
+            alert('User created successfully');
+            navigate('/');
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
   return (
-    <CustomForm>
+    <CustomForm onSubmit={signupHandler}>
         <label htmlFor="email">Email</label>
-        <input type="email" id="email" name="email" />
+        <input type="email" id="email" name="email" onChange={(e) => setEmail(e.target.value)} />
         <label htmlFor="password">Password</label>
-        <input type="password" id="password" name="password" />
+        <input type="password" id="password" name="password" onChange={(e) => setPassword(e.target.value)} />
         <label htmlFor="password">Confirm Password</label>
-        <input type="password" id="password" name="password" />
+        <input type="password" id="password" name="password" onChange={(e) => setConfirmPassword(e.target.value)} />
         <label htmlFor="name">Name</label>
-        <input type="text" id="name" name="name" />
+        <input type="text" id="name" name="name" onChange={(e) => setName(e.target.value)}/>
         <button type="submit">Sign Up</button>
     </CustomForm>
   )

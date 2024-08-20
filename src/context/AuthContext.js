@@ -1,63 +1,97 @@
-import { createContext, useState, useContext} from "react";
-import { app } from "../firebase";
+import { createContext, useContext, useEffect, useState } from "react";
+import { auth, db } from "../firebase";
 import {
-  getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  onAuthStateChanged,
+  GoogleAuthProvider,
+  signInWithPopup,
+  setPersistence,
+  browserSessionPersistence
 } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 
-export const AuthContext = createContext();
+const AuthContext = createContext();
 
+export const AuthContextProvider = ({ children }) => {
 
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState({});
 
-  const auth = getAuth(app);
-
-  const signUp = async (email, password) => {
-    try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      setUser(userCredential.user);
-    } catch (error) {
-      console.error(error.message);
-    }
+  const signUp = async (email, password, nickname) => {
+    createUserWithEmailAndPassword(auth, email, password, nickname)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        setDoc(doc(db, "users", user.uid), {
+          email: user.email,
+          nickname: nickname,
+        });
+        setUser(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
   };
 
-  const logIn = async (email, password) => {
-    try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      setUser(userCredential.user);
-    } catch (error) {
-      console.error(error.message);
-    }
+  function logIn(email, password) {
+    signInWithEmailAndPassword(auth, email, password).catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    });
+  }
+
+  function logOut() {
+    alert('로그아웃 되었습니다.');
+    signOut(auth).catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    });
+  }
+
+  const googleSignIn = async (navigate) => {
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({
+      prompt: 'select_account'
+    });
+
+    setPersistence(auth, browserSessionPersistence)
+      .then(async () => {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        setDoc(doc(db, "users", user.uid), {
+          email: user.email,
+          nickname: user.displayName,
+        });
+        setUser(user);
+        navigate('/');
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
   };
 
-  const logOut = async () => {
-    try {
-      await signOut(auth);
-      setUser(null);
-    } catch (error) {
-      console.error(error.message);
-    }
-  };
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, signUp, logIn, logOut }}>
+    <AuthContext.Provider value={{ signUp, logIn, logOut, googleSignIn, user }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => {
+export function UserAuth() {
   return useContext(AuthContext);
-};
+}
