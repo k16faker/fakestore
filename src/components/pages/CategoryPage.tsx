@@ -63,4 +63,7 @@ const CustomUl = styled.ul`
     list-style: none;
     padding: 0;
     margin: 0;
+    @media (max-width: 1280px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
 `;

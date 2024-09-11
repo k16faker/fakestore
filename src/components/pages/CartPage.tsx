@@ -45,7 +45,7 @@ const CartPage = () => {
         ))}
       </CustomUl>
       <h2>총 가격: {fixedPrice} $</h2>
-      <CustomBtn onClick={() => console.log(carts)}>주문하기</CustomBtn>
+      <CustomBtn onClick={() => navigate("/order")}>주문하기</CustomBtn>
     </Container>
   );
 };

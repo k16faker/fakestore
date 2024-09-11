@@ -11,6 +11,7 @@ import DetailProductPage from './components/products/DetailProductPage';
 import CartPage from './components/pages/CartPage';
 import LoginPage from './components/pages/LoginPage';
 import SignupPage from './components/pages/SignupPage';
+import OrderPage from './components/pages/OrderPage';
 
 function App() {
 
@@ -34,6 +35,10 @@ function App() {
         {
           path:'/cart',
           element:<CartPage />
+        },
+        {
+          path:'/order',
+          element:<OrderPage />
         },
         {
           path:'/login',
